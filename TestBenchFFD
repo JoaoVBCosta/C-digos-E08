@@ -1,0 +1,49 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+ENTITY TB_FF_D IS
+END TB_FF_D;
+
+ARCHITECTURE behavior OF TB_FF_D IS
+    COMPONENT FF_D
+        PORT (
+            d     : IN  STD_LOGIC;
+            clk   : IN  STD_LOGIC;
+            q     : OUT STD_LOGIC;
+            q_bar : OUT STD_LOGIC
+        );
+    END COMPONENT;
+
+    SIGNAL d, clk : STD_LOGIC := '0';
+    SIGNAL q, q_bar : STD_LOGIC;
+BEGIN
+    uut: FF_D PORT MAP (
+        d => d,
+        clk => clk,
+        q => q,
+        q_bar => q_bar
+    );
+
+    stim_proc: PROCESS
+    BEGIN
+        d <= '0';
+        WAIT FOR 50 ns;
+        clk <= '0';
+        WAIT FOR 50 ns;
+        clk <= '1';
+        WAIT FOR 50 ns;
+        clk <= '0';
+        WAIT FOR 50 ns;
+
+        d <= '1';
+        WAIT FOR 50 ns;
+        clk <= '0';
+        WAIT FOR 50 ns;
+        clk <= '1';
+        WAIT FOR 50 ns;
+        clk <= '0';
+        WAIT FOR 50 ns;
+
+        WAIT;
+    END PROCESS;
+END behavior;
