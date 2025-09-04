@@ -1,0 +1,52 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+ENTITY TestBench IS
+END TestBench;
+
+ARCHITECTURE behavior OF TestBench IS
+    -- Component Declaration for the Unit Under Test (UUT)
+    COMPONENT Modulo
+        PORT(
+            clock  : IN  std_logic;
+            Reset  : IN  std_logic;
+            Output : BUFFER integer RANGE 0 TO 7
+        );
+    END COMPONENT;
+
+    -- Inputs
+    signal clock  : std_logic := '0';
+    signal Reset  : std_logic := '0';
+    -- Outputs
+    signal Output : integer RANGE 0 TO 7;
+BEGIN
+    -- Instantiate the Unit Under Test (UUT)
+    uut: Modulo PORT MAP (
+        clock  => clock,
+        Reset  => Reset,
+        Output => Output
+    );
+
+    -- Stimulus process
+    stim_proc: PROCESS
+    BEGIN
+        -- Reset inicial
+        Reset <= '1';
+        WAIT FOR 100 ns;
+        Reset <= '0';
+        WAIT FOR 100 ns;
+
+        -- Sequência completa de clocks (18 pulsos = 9 bordas de subida)
+        clock <= '0'; WAIT FOR 100 ns; clock <= '1'; WAIT FOR 100 ns; -- Ciclo 1
+        clock <= '0'; WAIT FOR 100 ns; clock <= '1'; WAIT FOR 100 ns; -- Ciclo 2
+        clock <= '0'; WAIT FOR 100 ns; clock <= '1'; WAIT FOR 100 ns; -- Ciclo 3
+        clock <= '0'; WAIT FOR 100 ns; clock <= '1'; WAIT FOR 100 ns; -- Ciclo 4
+        clock <= '0'; WAIT FOR 100 ns; clock <= '1'; WAIT FOR 100 ns; -- Ciclo 5
+        clock <= '0'; WAIT FOR 100 ns; clock <= '1'; WAIT FOR 100 ns; -- Ciclo 6
+        clock <= '0'; WAIT FOR 100 ns; clock <= '1'; WAIT FOR 100 ns; -- Ciclo 7
+        clock <= '0'; WAIT FOR 100 ns; clock <= '1'; WAIT FOR 100 ns; -- Ciclo 8
+        clock <= '0'; WAIT FOR 100 ns; clock <= '1'; WAIT FOR 100 ns; -- Ciclo 9
+
+        WAIT; -- Encerra a simulação
+    END PROCESS;
+END;
