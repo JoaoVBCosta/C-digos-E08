@@ -1,0 +1,29 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+ENTITY FF_T IS
+    PORT (
+        t     : IN  STD_LOGIC;
+        clk   : IN  STD_LOGIC;
+        q     : OUT STD_LOGIC;
+        q_bar : OUT STD_LOGIC
+    );
+END FF_T;
+
+ARCHITECTURE Behavioral OF FF_T IS
+    SIGNAL sinal_q : STD_LOGIC := '0';
+BEGIN
+    PROCESS (clk)
+    BEGIN
+        IF rising_edge(clk) THEN
+            IF (t = '1') THEN
+                sinal_q <= NOT sinal_q; -- alterna
+            ELSE
+                sinal_q <= sinal_q;     -- mantém
+            END IF;
+        END IF;
+    END PROCESS;
+
+    q     <= sinal_q;
+    q_bar <= NOT sinal_q;
+END Behavioral;
