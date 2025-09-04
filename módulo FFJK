@@ -1,0 +1,38 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+ENTITY FF_JK is
+    PORT (
+        k     : in  STD_LOGIC;
+        j     : in  STD_LOGIC;
+        reset : in  STD_LOGIC;
+        clk   : in  STD_LOGIC;
+        q     : out STD_LOGIC;
+        q_bar : out STD_LOGIC
+    );
+END FF_JK;
+
+ARCHITECTURE Behavioral OF FF_JK IS
+    signal sinal_q: STD_LOGIC;
+BEGIN
+    process(clk, reset)
+    BEGIN
+        IF (reset = '1') THEN
+            sinal_q <= '0';
+        ELSIF rising_edge(clk) THEN
+            IF (j = '0' and k = '0') THEN
+                sinal_q <= sinal_q;
+            ELSIF (j = '0' and k = '1') THEN
+                sinal_q <= '0';
+            ELSIF (j = '1' and k = '0') THEN
+                sinal_q <= '1';
+            ELSIF (j = '1' and k = '1') THEN
+                sinal_q <= not (sinal_q);
+            END IF;
+        ELSIF falling_edge(clk) THEN
+            sinal_q <= sinal_q;
+        END IF;
+    END PROCESS;
+
+    q     <= sinal_q;
+    q_bar <= not sinal_q;
+END Behavioral;
